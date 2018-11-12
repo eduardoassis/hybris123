@@ -1,4 +1,7 @@
 # Hybris123SnippetStart hybris123gitignore
+idea-module-files/*
+.idea/
+bin/
 /log
 /temp
 /bin/ext-accelerator/
