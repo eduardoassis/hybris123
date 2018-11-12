@@ -1,4 +1,5 @@
 # Hybris123SnippetStart hybris123gitignore
+data/
 idea-module-files/*
 .idea/
 bin/
