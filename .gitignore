@@ -2,7 +2,8 @@
 data/
 idea-module-files/*
 .idea/
-bin/
+**/bin/*
+!/bin/custom/
 /log
 /temp
 /bin/ext-accelerator/
@@ -26,4 +27,13 @@ bin/
 /bin/ext-smartedit
 /bin/ext-webservices
 config/backup/
+**/lib/*
+**/classes/*
+**/.settings/*
+**/.externalToolBuilders/*
 # Hybris123SnippetEnd
+
+*.jar
+*.class
+*.classpath
+*.project
