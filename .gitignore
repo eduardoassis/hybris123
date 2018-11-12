@@ -4,6 +4,10 @@ idea-module-files/*
 .idea/
 **/bin/*
 !/bin/custom/
+!/bin/custom/
+!/bin/custom/concerttours/
+!/bin/custom/concerttours/resources/*
+
 /log
 /temp
 /bin/ext-accelerator/
