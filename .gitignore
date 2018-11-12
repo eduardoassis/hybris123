@@ -25,4 +25,5 @@ bin/
 /bin/ext-template/
 /bin/ext-smartedit
 /bin/ext-webservices
+config/backup/
 # Hybris123SnippetEnd
