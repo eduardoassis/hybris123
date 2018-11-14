@@ -7,6 +7,8 @@ idea-module-files/*
 !/bin/custom/
 !/bin/custom/concerttours/
 !/bin/custom/concerttours/resources/*
+/bin/custom/concerttours/eclipsebin/*
+/bin/custom/concerttours/gensrc/*
 
 /log
 /temp
