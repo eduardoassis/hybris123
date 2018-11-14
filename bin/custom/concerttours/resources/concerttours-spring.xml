@@ -34,6 +34,16 @@
     <bean id="ConcerttoursCustomSetup" class="concerttours.setup.ConcerttoursCustomSetup" >
     	<property name="importService" ref="importService"/>
 	</bean>
+
+    <alias name = "defaultBandFacade" alias = "bandFacade" />
+    <bean id = "defaultBandFacade" class ="concerttours.facades.impl.DefaultBandFacade" >
+        <property name = "bandService" ref = "bandService" />
+    </bean>
+
+    <alias name = "defaultTourFacade" alias = "tourFacade" />
+    <bean id = "defaultTourFacade" class ="concerttours.facades.impl.DefaultTourFacade" >
+        <property name = "productService" ref = "productService" />
+    </bean>
 	<!-- Hybris123SnippetEnd -->
 
 	<!--
