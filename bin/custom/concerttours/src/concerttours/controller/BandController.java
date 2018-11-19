@@ -8,7 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
@@ -21,6 +25,14 @@ public class BandController {
 
     private CatalogVersionService catalogVersionService;
     private BandFacade bandFacade;
+
+    @GET
+    @RequestMapping(value = "/api/bands", produces = MediaType.APPLICATION_JSON)
+    @ResponseBody
+    public Response listBands() {
+        List<BandData> bands = bandFacade.getBands();
+        return Response.ok().entity(bands).build();
+    }
 
     @RequestMapping(value = "/bands")
     public String showBands(final Model model) {
