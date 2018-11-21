@@ -35,6 +35,7 @@
 		<property name = "date" type = "java.util.Date" />
 		<property name = "venue" type = "java.lang.String" />
 		<property name = "type" type = "java.lang.String" />
+		<property name="countDown" type="java.lang.Long" />
 	</bean>
 	<bean class="concerttours.data.TourData">
 		<description>Data object representing a tour</description>
