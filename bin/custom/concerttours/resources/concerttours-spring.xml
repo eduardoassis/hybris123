@@ -29,7 +29,7 @@
      </bean>
     <!-- Hybris123SnippetEnd -->
 
-    
+
     <!-- Hybris123SnippetStart injectingConcerttoursCustomSetup -->
     <bean id="ConcerttoursCustomSetup" class="concerttours.setup.ConcerttoursCustomSetup" >
     	<property name="importService" ref="importService"/>
@@ -116,6 +116,10 @@
         <property name="mediaService" ref="mediaService"/>
         <property name="flexibleSearchService" ref="flexibleSearchService"/>
     </bean>
-    
+
     <bean id="concertDaysUntilAttributeHandler" class="concerttours.attributehandlers.ConcertDaysUntilAttributeHandler"/>
+
+    <bean id="concerttourEventListener" class="concerttours.events.NewBandEventListener" parent="abstractEventListener">
+        <property name="modelService" ref="modelService"/>
+    </bean>
 </beans>
