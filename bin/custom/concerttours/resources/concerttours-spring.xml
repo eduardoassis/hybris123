@@ -21,7 +21,7 @@
     <context:component-scan base-package="concerttours"/>
      <!-- Hybris123SnippetEnd -->
 
-     <!-- Hybris123SnippetStart injectingDefaultBandService -->
+    <!-- Hybris123SnippetStart injectingDefaultBandService -->
 
      <alias name = "defaultBandService" alias = "bandService" />
      <bean id = "defaultBandService" class = "concerttours.service.impl.DefaultBandService" >
@@ -29,21 +29,25 @@
      </bean>
     <!-- Hybris123SnippetEnd -->
 
+     <!--  Hybris123SnippetStart injectingDefaultBandFacade -->
+    <alias name = "defaultBandFacade" alias = "bandFacade" />
+    <bean id = "defaultBandFacade" class ="concerttours.facades.impl.DefaultBandFacade" >
+        <property name = "bandService" ref = "bandService" />
+    </bean>
+    <!-- Hybris123SnippetEnd -->
+
+
+     <!-- Hybris123SnippetStart injectingDefaultTourFacade -->
+    <alias name = "defaultTourFacade" alias = "tourFacade" />
+    <bean id = "defaultTourFacade" class ="concerttours.facades.impl.DefaultTourFacade" >
+        <property name = "productService" ref = "productService" />
+    </bean>
+    <!-- Hybris123SnippetEnd -->
 
     <!-- Hybris123SnippetStart injectingConcerttoursCustomSetup -->
     <bean id="ConcerttoursCustomSetup" class="concerttours.setup.ConcerttoursCustomSetup" >
     	<property name="importService" ref="importService"/>
 	</bean>
-
-    <alias name = "defaultBandFacade" alias = "bandFacade" />
-    <bean id = "defaultBandFacade" class ="concerttours.facades.impl.DefaultBandFacade" >
-        <property name = "bandService" ref = "bandService" />
-    </bean>
-
-    <alias name = "defaultTourFacade" alias = "tourFacade" />
-    <bean id = "defaultTourFacade" class ="concerttours.facades.impl.DefaultTourFacade" >
-        <property name = "productService" ref = "productService" />
-    </bean>
 	<!-- Hybris123SnippetEnd -->
 
 	<!--
@@ -106,7 +110,29 @@
 	      	            !execution(* getPK(..))" />
 	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />
 	  -->
-    <bean id="concerttoursSystemSetup" class="concerttours.setup.ConcerttoursSystemSetup">
+
+    
+     <!-- Hybris123SnippetStart injectingConcertDaysUntilAttributeHandler -->
+    <bean id="concertDaysUntilAttributeHandler" class="concerttours.attributehandlers.ConcertDaysUntilAttributeHandler"/>
+ 	<!-- Hybris123SnippetEnd -->
+ 	
+     <!-- Hybris123SnippetStart injectingEventListener -->
+    <bean id="concerttourEventListener" class="concerttours.events.NewBandEventListener" parent="abstractEventListener">
+      <property name="modelService" ref="modelService" />
+    </bean>
+ 	<!-- Hybris123SnippetEnd -->
+    
+    <!-- Hybris123SnippetStart injectingInterceptor -->
+    <bean id="bandAlbumSalesInterceptor" class="concerttours.interceptors.BandAlbumSalesInterceptor" />
+    <bean id="BandInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+    	<property name="interceptor" ref="bandAlbumSalesInterceptor" />
+    	<property name="typeCode" value="Band" />
+	</bean>
+	<bean id="bandAlbumSalesEventListener" class="concerttours.events.BandAlbumSalesEventListener" parent="abstractEventListener" >
+    	<property name="modelService" ref="modelService" />
+	</bean>
+	<!-- Hybris123SnippetEnd -->
+     <bean id="concerttoursSystemSetup" class="concerttours.setup.ConcerttoursSystemSetup">
 
         <constructor-arg ref="concerttoursService"/>
     </bean>
@@ -116,10 +142,5 @@
         <property name="mediaService" ref="mediaService"/>
         <property name="flexibleSearchService" ref="flexibleSearchService"/>
     </bean>
-
-    <bean id="concertDaysUntilAttributeHandler" class="concerttours.attributehandlers.ConcertDaysUntilAttributeHandler"/>
-
-    <bean id="concerttourEventListener" class="concerttours.events.NewBandEventListener" parent="abstractEventListener">
-        <property name="modelService" ref="modelService"/>
-    </bean>
+    
 </beans>
