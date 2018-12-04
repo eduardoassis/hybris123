@@ -1,5 +1,3 @@
-// Hybris123SnippetStart concerttours.events.BandAlbumSalesEventListenerIntegrationTest
-    
 package concerttours.events;
 import de.hybris.bootstrap.annotations.IntegrationTest;
 import de.hybris.platform.servicelayer.ServicelayerTest;
@@ -25,12 +23,14 @@ public class BandAlbumSalesEventListenerIntegrationTest extends ServicelayerTest
     private static final String BAND_NAME = "Tight Notes";
     private static final String BAND_HISTORY = "New contemporary, 7-piece Jaz unit from London, formed in 2015";
     private static final Long MANY_ALBUMS_SOLD = Long.valueOf(1000000L);
+
     @Before
     public void setUp() throws Exception
     {
         createCoreData();
         createDefaultCatalog();
     }
+
     @Test(expected = ModelSavingException.class)
     public void testValidationInterceptor()
     {
@@ -39,9 +39,9 @@ public class BandAlbumSalesEventListenerIntegrationTest extends ServicelayerTest
         band.setAlbumSales(Long.valueOf(-10L));
         modelService.save(band);
     }
-    
-    @Test
-    public void testEventSending() throws Exception
+   
+    // Comment out annotation to disable test @Test
+    public void testEventSendingSync() throws Exception
     {
         final BandModel band = modelService.create(BandModel.class);
         band.setCode(BAND_CODE);
@@ -52,6 +52,24 @@ public class BandAlbumSalesEventListenerIntegrationTest extends ServicelayerTest
         final NewsModel news = findLastNews();
         Assert.assertTrue("Unexpected news: " + news.getHeadline(), news.getHeadline().contains(BAND_NAME));
     }
+    
+    // Hybris123SnippetStart concerttours.events.BandAlbumSalesEventListenerIntegrationTestAsync
+    @Test
+    public void testEventSendingAsync() throws Exception
+    {
+        final BandModel band = modelService.create(BandModel.class);
+        band.setCode(BAND_CODE);
+        band.setName(BAND_NAME);
+        band.setHistory(BAND_HISTORY);
+        band.setAlbumSales(MANY_ALBUMS_SOLD);
+        modelService.save(band);
+        // add sleep here to wait for event processing thread to complete
+        Thread.sleep(2000L);
+        final NewsModel news = findLastNews();
+        Assert.assertTrue("Unexpected news: " + news.getHeadline(), news.getHeadline().contains(BAND_NAME));
+    }
+    //Hybris123SnippetEnd
+
     private NewsModel findLastNews()
     {
         final StringBuilder builder = new StringBuilder();
@@ -69,5 +87,3 @@ public class BandAlbumSalesEventListenerIntegrationTest extends ServicelayerTest
         }
     }
 }
-//Hybris123SnippetEnd
-
